@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ."
   },
   "author": "cocosilex",
   "license": "ISC",
