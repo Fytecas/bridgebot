@@ -6,7 +6,7 @@
     "start": "nodemon ."
   },
   "author": "cocosilex",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
     "discord.js": "^14.16.2",
