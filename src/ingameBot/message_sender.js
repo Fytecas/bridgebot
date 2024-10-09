@@ -35,11 +35,6 @@ module.exports = {
             if(currentMessage.length < 128) {
                 messagesToSend.push(currentMessage)
             } else {
-                // matchedMessage = currentMessage.match(/.{1,100}/g)
-                // for(let messages in matchedMessage) {
-                //     messagesToSend.push(messages)
-                // }
-
                 // Divide the message in less than 128 characters parts without cutting a word
                 let messageParts = currentMessage.split(/(?<=\s)/);
                 for(let i = 0; i < messageParts.length; i++) {
