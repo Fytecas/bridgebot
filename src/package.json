@@ -6,6 +6,10 @@
     "start": "nodemon ."
   },
   "author": "cocosilex",
+  "contributors": [
+    "cocosilex",
+    "Dario Le Hy"
+  ],
   "license": "GPL-3.0-only",
   "description": "",
   "dependencies": {
