@@ -8,35 +8,47 @@ let messagesToSend = []
 module.exports = {
     send_message: (message) => {
         if (message.author.tag !== client.user.tag && message.channelId === SETTINGS.channels.bridgeId && ! message.author.bot) {
-            let messageToSend 
+            // Renamed to currentMessage for clarity
+            let currentMessage = "";
             if(message.type === MessageType.Reply) {
               const repliedMember = message.mentions.members.find(member => member.id = message.mentions.repliedUser.id)
 
               if(message.member.nickname && repliedMember.nickname) {
-                    messageToSend = `${message.member.nickname} > ${repliedMember.nickname}: ${message.content}`
+                    currentMessage = `${message.member.nickname} > ${repliedMember.nickname}: ${message.content}`
                  } else if (message.member.nickname) {  
-                    messageToSend = `${message.member.nickname} > ${message.mentions.repliedUser.displayName}: ${message.content}`
+                    currentMessage = `${message.member.nickname} > ${message.mentions.repliedUser.displayName}: ${message.content}`
                 } else if(!repliedMember) {
-                    messageToSend = `${message.member.displayName} > ${message.mentions.repliedUser.displayName}: ${message.content}`
+                    currentMessage = `${message.member.displayName} > ${message.mentions.repliedUser.displayName}: ${message.content}`
                 } else if(repliedMember.nickname) {
-                    messageToSend = `${message.member.displayName} > ${repliedMember.nickname}: ${message.content}`
+                    currentMessage = `${message.member.displayName} > ${repliedMember.nickname}: ${message.content}`
                 } else {
-                    messageToSend = `${message.member.displayName} > ${message.mentions.repliedUser.displayName}: ${message.content}`
+                    currentMessage = `${message.member.displayName} > ${message.mentions.repliedUser.displayName}: ${message.content}`
                  }
             } else {
               if(message.member.nickname) {
-                    messageToSend = `${message.member.nickname}: ${message.content}`
+                    currentMessage = `${message.member.nickname}: ${message.content}`
                  } else {
-                    messageToSend = `${message.member.displayName}: ${message.content}`
+                    currentMessage = `${message.member.displayName}: ${message.content}`
                  }
             }
             
-            if(messageToSend.length < 128) {
-                messagesToSend.push(messageToSend)
+            if(currentMessage.length < 128) {
+                messagesToSend.push(currentMessage)
             } else {
-                matchedMessage = messageToSend.match(/.{1,100}/g)
-                for(let messages in matchedMessage) {
-                    messagesToSend.push(messages)
+                // matchedMessage = currentMessage.match(/.{1,100}/g)
+                // for(let messages in matchedMessage) {
+                //     messagesToSend.push(messages)
+                // }
+
+                // Divide the message in less than 128 characters parts without cutting a word
+                let messageParts = currentMessage.split(/(?<=\s)/);
+                for(let i = 0; i < messageParts.length; i++) {
+                    if(currentMessage.length + messageParts[i].length < 128) {
+                        currentMessage += messageParts[i];
+                    } else {
+                        messagesToSend.push(currentMessage);
+                        currentMessage = messageParts[i];
+                    }
                 }
             }
           } 
@@ -51,5 +63,5 @@ function bridgeInit() {
         messagesToSend.shift()
       }
     });
-  }
+}
 
