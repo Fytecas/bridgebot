@@ -15,11 +15,10 @@ function reconnectbot() {
   }, autoReconnectCooldown);
 }
 
-let bot;
 function createBot() {
   console.log(`[PROCESS] Connecting to hypixel...`);
   console.debug(`[DEBUG] Bot is connecting to hypixel with the following credentials: ${SETTINGS.minecraftAccount.email} ${SETTINGS.minecraftAccount.password}`);
-  bot = mineflayer.createBot({
+  return mineflayer.createBot({
     host: "hypixel.net",
     username: SETTINGS.minecraftAccount.email,
     password: SETTINGS.minecraftAccount.password,
@@ -28,7 +27,7 @@ function createBot() {
   });
 }
 
-createBot();
+let bot = createBot();
 
 bot.on("message", async (message) => {
   const realMessage = `message ${message}`;
