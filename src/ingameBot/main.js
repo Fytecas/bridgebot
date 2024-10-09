@@ -17,6 +17,8 @@ function reconnectbot() {
 
 let bot;
 function createBot() {
+  console.log(`[PROCESS] Connecting to hypixel...`);
+  console.debug(`[DEBUG] Bot is connecting to hypixel with the following credentials: ${SETTINGS.minecraftAccount.email} ${SETTINGS.minecraftAccount.password}`);
   bot = mineflayer.createBot({
     host: "hypixel.net",
     username: SETTINGS.minecraftAccount.email,
